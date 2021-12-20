@@ -1,0 +1,27 @@
+body {
+  width: max-content;
+  margin: auto;
+  position: relative;
+  top: 20px;
+  display: block;
+  justify-content: center;
+}
+.Local-score {
+  border: 2px solid black;
+  padding: 5px;
+  width: max-content;
+}
+.Session-score {
+  border: 2px solid black;
+  padding: 5px;
+  width: max-content;
+}
+button {
+  position: relative;
+  border: 2px solid black;
+  left: 250px;
+  bottom: 195px;
+  width: 50px;
+  height: 60px;
+  font-size: xx-large;
+}
