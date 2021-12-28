@@ -1,0 +1,89 @@
+[
+  {
+    "itemName": "Banana Milk Shake",
+    "price": 100,
+    "course": "beverages"
+  },
+  {
+    "itemName": "Litchi Milk Shake",
+    "price": 100,
+    "course": "beverages"
+  },
+  {
+    "itemName": "Orange Juice",
+    "price": 80,
+    "course": "beverages"
+  },
+
+  {
+    "itemName": "Chicken Biryani",
+    "price": 210,
+    "course": "main course"
+  },
+  {
+    "itemName": "Chicken Lollipop",
+    "price": 180,
+    "course": "appetizers"
+  },
+
+  {
+    "itemName": "Crusty Garlic Focacci with Melted Cheese",
+    "price": 105.0,
+    "course": "appetizers"
+  },
+  {
+    "itemName": "French Fries",
+    "price": 105.0,
+    "course": "appetizers"
+  },
+  {
+    "itemName": "Home Country Fries with Herbs & Chilli Flakes",
+    "price": 105.0,
+    "course": "appetizers"
+  },
+  {
+    "itemName": "French Fries with Cheese & Jalapenos",
+    "price": 135.0,
+    "course": "appetizers"
+  },
+  {
+    "itemName": "Pav Bhaji",
+    "price": 40.0,
+    "course": "entree"
+  },
+  {
+    "itemName": "Margherita Pizza",
+    "price": 100.0,
+    "course": "main course"
+  },
+  {
+    "itemName": "Mutton Biryani",
+    "price": 250.0,
+    "course": "main course"
+  },
+  {
+    "itemName": "Veg Fried Rice",
+    "price": 150.0,
+    "course": "main course"
+  },
+  {
+    "itemName": "Veg Biryani",
+    "price": 170.0,
+    "course": "main course"
+  },
+  {
+    "itemName": "Vannila Ice Cream",
+    "price": 80.0,
+    "course": "desserts"
+  },
+  {
+    "itemName": "Gulab Jamun",
+    "price": 35.0,
+    "course": "desserts"
+  },
+  {
+    "itemName": "Kaju Barfi 3pcs",
+    "price": 90.0,
+    "course": "desserts"
+  }
+]
