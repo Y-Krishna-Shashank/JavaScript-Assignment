@@ -227,7 +227,7 @@ let displayTableDetails = function (key, map) {
       cell = document.createElement("td");
       cellNode = document.createElement("input");
       cellNode.type = "number";
-      cellNode.id = key + "-input";
+      cellNode.id = key + "-" + row.id;
       cellNode.setAttribute(
         "onchange",
         `incOrDec('${row.id}','${itemId}','${key}','${cellNode.id}')`
@@ -259,7 +259,7 @@ let displayTableDetails = function (key, map) {
     var modal_footer = document.createElement("div");
     modal_footer.classList.add("modal-footer");
     modal_footer_button = document.createElement("button");
-    modal_footer.setAttribute("onclick", "refresh()");
+    modal_footer.setAttribute("onclick", `refresh('${key}')`);
     modal_footer_button_textContent = document.createTextNode(
       "CLOSE SESSION (GENERATE BILL)"
     );
@@ -304,9 +304,11 @@ function deleteRow(rowId, itemId, key) {
   arr[1]--;
   map.delete(itemId);
   arr[2] = map;
+
   billDetails.set(key, arr);
-  // console.log(billDetails.get(key));
+  if (map.size == 0) closing(key);
   if (arr[1] == 0) {
+    // console.log(billDetails.get(key));
     closing(key);
     document.getElementById(
       key
@@ -319,9 +321,10 @@ function deleteRow(rowId, itemId, key) {
 
 function incOrDec(rowId, itemId, key, numberId) {
   rowId = document.getElementById(rowId);
-
+  console.log(rowId, itemId, key, numberId);
   numberId = document.querySelector("#" + numberId);
   currentCount = Number(numberId.value);
+  console.log(currentCount);
   // console.log("changed value: " + numberId.value);
   arr = [];
   foodArr = [];
@@ -353,16 +356,19 @@ function incOrDec(rowId, itemId, key, numberId) {
     map.delete(itemId);
     rowId.classList.add("hidden");
   }
-  map.set(itemId, foodArr);
+  // map.set(itemId, foodArr);
   arr[0] = totalPrice;
   arr[1] = totalItems;
   arr[2] = map;
   billDetails.set(key, arr);
-  if (arr[1] == 0) {
+  if (arr[1] == 0 && totalPrice !== 0) {
     closing(key);
+    deleteRow(rowId, itemId, key);
     document.getElementById(
       key
     ).outerHTML = `<li id="${key}" ondrop="drop(event)" ondragover="allowDrop(event)">${key}<br><br> Rs. ${total} | Total items: ${arr[1]}</li>`;
+  } else if (totalPrice == 0) {
+    refresh(key);
   } else
     document.getElementById(
       key
@@ -370,6 +376,11 @@ function incOrDec(rowId, itemId, key, numberId) {
 
   // console.log(foodArr);
 }
-function refresh() {
-  location.reload();
+function refresh(key) {
+  modal = document.getElementById("modal");
+  modal.style.display = "none";
+  document.getElementById(
+    key
+  ).outerHTML = `<li id="${key}" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="displayTableDetails('${key}',billDetails)">${key}<br><br> Rs. ${0} | Total items: ${0}</li>`;
+  billDetails.delete(key);
 }
