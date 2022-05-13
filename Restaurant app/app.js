@@ -298,10 +298,13 @@ function deleteRow(rowId, itemId, key) {
 
   total = arr[0];
   currentItemTotalPrice = Number(foodArr[0]);
-  // console.log(foodArr[0]);
-  total -= currentItemTotalPrice;
+  currentDeletedFoodItemCount=Number(foodArr[1]);
+   
+ total -= currentItemTotalPrice;
   arr[0] = total;
-  arr[1]--;
+  
+  arr[1]-=currentDeletedFoodItemCount;
+  
   map.delete(itemId);
   arr[2] = map;
 
