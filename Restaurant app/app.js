@@ -41,6 +41,7 @@ function drop(ev) {
 
   price = Number(str.slice(data.lastIndexOf(",") + 1));
   let id = ev.target.id;
+  
   let arr = [];
   tableOrdering = new Map();
   if (!billDetails.get(id)) {
@@ -76,7 +77,7 @@ function drop(ev) {
   console.log();
   document.getElementById(
     id
-  ).outerHTML = `<li id="${id}"  ondrop="drop(event)" ondragover="allowDrop(event)" onclick="displayTableDetails('${id}',billDetails)">${id}<br><br> Rs. ${arr[0]} | Total items: ${arr[1]}</li>`;
+  ).outerHTML = `<li  draggable='false' ondragstart="return false;" id="${id}" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="displayTableDetails('${id}',billDetails)">${id}<br><br> Rs. ${arr[0]} | Total items: ${arr[1]}</li>`;
 }
 function loadTableData(items) {
   let li1 = "";
@@ -85,7 +86,7 @@ function loadTableData(items) {
     let listId = `Table-${items[index].tableName[num]}`;
     // arr = billDetails.get(listId);
     // if (arr[0] !== 0)
-    li1 += `<li id="${listId}" ondrop="drop(event)" ondragover="allowDrop(event)"onclick="displayTableDetails('${listId}',billDetails)"> ${items[index].tableName}<br><br> Rs. ${items[index].bill} | Total items: ${items[index].itemCount}</li>`;
+    li1 += `<li  draggable='false' ondragstart="return false;"  id="${listId}" ondrop="drop(event)" ondragover="allowDrop(event)"onclick="displayTableDetails('${listId}',billDetails)"> ${items[index].tableName}<br><br> Rs. ${items[index].bill} | Total items: ${items[index].itemCount}</li>`;
     // else
     //   li1 += `<li id="${listId}" ondrop="drop(event)" ondragover="allowDrop(event)> ${items[index].tableName}<br><br> Rs. ${items[index].bill} | Total items: ${items[index].itemCount}</li>`;
   }
@@ -98,7 +99,7 @@ function loadMenuData(items) {
     let item = items[index].itemName;
     let price = items[index].price;
     num = Number(index) + 1;
-    li += `<li draggable="true"id="food-item-${num}" ondragstart="dragStart(event,'${item}',${price})"> ${items[index].itemName}<br><br> ₹${items[index].price}</li>`;
+    li += `<li draggable="true" id="food-item-${num}" ondragstart="dragStart(event,'${item}',${price})"> ${items[index].itemName}<br><br> ₹${items[index].price}</li>`;
   }
   itemList.innerHTML = li;
 }
@@ -319,7 +320,7 @@ function deleteRow(rowId, itemId, key) {
   } else
     document.getElementById(
       key
-    ).outerHTML = `<li id="${key}" class="active" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="displayTableDetails('${key}',billDetails)">${key}<br><br> Rs. ${total} | Total items: ${arr[1]}</li>`;
+    ).outerHTML = `<li  id="${key}" class="active" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="displayTableDetails('${key}',billDetails)">${key}<br><br> Rs. ${total} | Total items: ${arr[1]}</li>`;
 }
 
 function incOrDec(rowId, itemId, key, numberId) {
