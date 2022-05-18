@@ -33,7 +33,7 @@ function allowDrop(event) {
 function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
-  // console.log(data);
+  console.log(data);
   str = String(data);
   firstIndex = str.indexOf(",");
   lastIndex = str.lastIndexOf(",");
@@ -49,7 +49,7 @@ function drop(ev) {
     tableOrdering.set(foodItem, [price, 1, itemPrice]);
 
     arr = [price, 1, tableOrdering];
-    // console.log(arr);
+    console.log(arr);
     billDetails.set(id, arr);
   } else {
     arr = billDetails.get(id);
@@ -207,51 +207,53 @@ let displayTableDetails = function (key, map) {
       // Create a <td> element and a text node, make the text
       // node the contents of the <td>, and put the <td> at
       // the end of the table row
-      var cell = document.createElement("td");
-      var cellText = document.createTextNode(`${i + 1}`);
-      cell.appendChild(cellText);
-      row.appendChild(cell);
+      let serialNoElement = document.createElement("td");
+      let serialNo= document.createTextNode(`${i + 1}`);
+      serialNoElement.appendChild(serialNo);
+      row.appendChild(serialNoElement);
 
-      itemId = "";
-      cell = document.createElement("td");
-      cell.id = orderedItems[i];
-      itemId = cell.id;
-      cellText = document.createTextNode(`${orderedItems[i]}`);
-      cell.appendChild(cellText);
-      row.appendChild(cell);
-
-      cell = document.createElement("td");
-      cellText = document.createTextNode(`${foodArr[i][0]}`);
-      cell.appendChild(cellText);
-      row.appendChild(cell);
-
-      cell = document.createElement("td");
-      cellNode = document.createElement("input");
-      cellNode.type = "number";
-      cellNode.id = key + "-" + row.id;
-      cellNode.setAttribute(
+      
+      let orderedFoodItemElement = document.createElement("td");
+      orderedFoodItemElement.id = orderedItems[i];
+    
+      orderedFoodItemName = document.createTextNode(`${orderedItems[i]}`);
+      orderedFoodItemElement.appendChild(orderedFoodItemName);
+      row.appendChild(orderedFoodItemElement);
+//price
+//orderedFoodItemPrice
+      priceElement = document.createElement("td");
+     priceElement.id="price-"+row.id;
+      orderedFoodItemPrice = document.createTextNode(`${foodArr[i][0]}`);
+      priceElement.appendChild(orderedFoodItemPrice);
+      row.appendChild(priceElement);
+//foodItemQuantity
+foodItemQuantityElement = document.createElement("td");
+foodItemQuantity = document.createElement("input");
+foodItemQuantity.type = "number";
+foodItemQuantity.id = key + "-" + row.id;
+foodItemQuantity.setAttribute(
         "onchange",
-        `incOrDec('${row.id}','${itemId}','${key}','${cellNode.id}')`
+        `incOrDec('${row.id}','${orderedFoodItemElement.id}','${key}','${foodItemQuantity.id}','${priceElement.id}')`
       );
-      cellNode.setAttribute("min", 0);
-      cellNode.setAttribute("max", 10);
-      cellNode.value = foodArr[i][1];
-      cell.appendChild(cellNode);
-      row.appendChild(cell);
-
+      foodItemQuantity.setAttribute("min", 0);
+      foodItemQuantity.setAttribute("max", 10);
+      foodItemQuantity.value = foodArr[i][1];
+      foodItemQuantityElement.appendChild(foodItemQuantity);
+      row.appendChild(foodItemQuantityElement);
+//delete
       itemPrice = foodArr[i][2];
 
-      cell = document.createElement("td");
-      cellNode = document.createElement("button");
-      cellNode.setAttribute(
+      deleteFoodItemElement= document.createElement("td");
+      deleteFoodItemButton = document.createElement("button");
+      deleteFoodItemButton.setAttribute(
         "onclick",
-        `deleteRow('${row.id}','${itemId}','${key}')`
+        `deleteRow('${row.id}','${orderedFoodItemElement.id}','${key}')`
       );
       image = document.createElement("img");
       image.src = "trash.png";
-      cellNode.appendChild(image);
-      cell.appendChild(cellNode);
-      row.appendChild(cell);
+      deleteFoodItemButton.appendChild(image);
+      deleteFoodItemElement.appendChild(deleteFoodItemButton);
+      row.appendChild(deleteFoodItemElement);
 
       tblBody.appendChild(row);
 
@@ -323,13 +325,15 @@ function deleteRow(rowId, itemId, key) {
     ).outerHTML = `<li  id="${key}" class="active" ondrop="drop(event)" ondragover="allowDrop(event)" onclick="displayTableDetails('${key}',billDetails)">${key}<br><br> Rs. ${total} | Total items: ${arr[1]}</li>`;
 }
 
-function incOrDec(rowId, itemId, key, numberId) {
+function incOrDec(rowId, itemId, key, foodQuantity, priceId) {
   rowId = document.getElementById(rowId);
-  console.log(rowId, itemId, key, numberId);
-  numberId = document.querySelector("#" + numberId);
-  currentCount = Number(numberId.value);
+  console.log(rowId, itemId, key, foodQuantity);
+  foodQuantity = document.querySelector("#" + foodQuantity);
+  priceElement = document.querySelector('#'+priceId);
+  currentCount = Number(foodQuantity.value);
+ 
   console.log(currentCount);
-  // console.log("changed value: " + numberId.value);
+  // console.log("changed value: " + foodQuantity.value);
   arr = [];
   foodArr = [];
   arr = billDetails.get(key);
@@ -354,6 +358,7 @@ function incOrDec(rowId, itemId, key, numberId) {
     totalPrice += itemPrice;
     totalItems++;
   }
+  priceElement.textContent=currentItemTotalPrice;
   foodArr[0] = currentItemTotalPrice;
   foodArr[1] = itemCount;
   if (currentCount == 0) {
